@@ -14,6 +14,8 @@ import {
   MenuBox,
   MenuList,
   MenuListName,
+  MenuName,
+  MenuNamePink,
   PhoneHead,
   PinkMenuName,
   Profile,
@@ -101,20 +103,22 @@ export default function FAQPage() {
         </Body>
         <AppMenu>
           <MenuBox>
-            <div class="menuIcon">1</div>
-            <div class="menuName">홈</div>
+            <img class="menuIcon" src="/home.png"></img>
+            <MenuName>홈</MenuName>
           </MenuBox>
           <MenuBox>
-            <div class="menuIcon">2</div>
-            <div class="menuName">잇츠로드</div>
+            <img class="menuIcon" src="/itsroad.png"></img>
+            <MenuName>잇츠로드</MenuName>
           </MenuBox>
           <MenuBox>
-            <div class="menuIcon">3</div>
-            <div class="menuName">마이찜</div>
+            <img class="menuIcon" src="/heart.png"></img>
+            <MenuName>마이찜</MenuName>
           </MenuBox>
           <MenuBox>
-            <div class="menuIcon">4</div>
-            <div class="menuName">마이</div>
+            <img class="menuIcon" src="/person.png"></img>
+            <MenuName>
+              <MenuNamePink>마이</MenuNamePink>
+            </MenuName>
           </MenuBox>
         </AppMenu>
       </Wrapper>

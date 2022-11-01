@@ -125,11 +125,24 @@ export const AppMenu = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  align-content: space-evenly;
+  margin-top: 30px;
+  /* align-items: center; */
   border-top: 1px solid #dcdcdc;
 `;
 
 export const MenuBox = styled.div`
   display: flex;
   flex-direction: column;
+  margin: 0px 30px;
+  padding: 10px;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const MenuName = styled.div`
+  color: #adadad;
+`;
+
+export const MenuNamePink = styled.span`
+  color: #ff1b6d;
 `;
