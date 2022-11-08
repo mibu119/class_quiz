@@ -12,6 +12,7 @@ export default function ProductSubmit() {
   const [name, setName] = useState("");
   const [detail, setDetail] = useState("");
   const [price, setPrice] = useState("");
+  const [isTrue, setIsTrue] = useState(false);
 
   const onChangeSeller = (event) => {
     setSeller(event.target.value);
@@ -30,6 +31,7 @@ export default function ProductSubmit() {
   };
 
   const onClickSubmit = async () => {
+    setIsTrue((prev) => !prev);
     const result = await createProduct({
       variables: {
         seller,
@@ -41,7 +43,7 @@ export default function ProductSubmit() {
       },
     });
     console.log(result);
-    router.push(`/05/boards_submit/${result.data.createProduct._id}`);
+    router.push(`/07/${result.data.createProduct._id}`);
   };
 
   return (
@@ -51,6 +53,7 @@ export default function ProductSubmit() {
       detail={onChangeDetail}
       price={onChangePrice}
       click={onClickSubmit}
+      true={isTrue}
     />
   );
 }
