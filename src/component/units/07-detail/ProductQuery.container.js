@@ -12,7 +12,7 @@ export default function ProductQuery() {
   const [checkbox, setCheckbox] = useState(false);
 
   const { data } = useQuery(FETCH_PRODUCTS, {
-    variables: { productId: router.query.productId },
+    variables: { page: router.query.page },
   });
 
   console.log("=======");
