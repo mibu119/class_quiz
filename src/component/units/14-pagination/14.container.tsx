@@ -4,7 +4,7 @@ import { FETCH_BOARDS, FETCH_BOARDS_COUNT } from "./14.queries";
 import PaginationPageUI from "./14.presenter";
 import {
   IQuery,
-  IQueryFetchBoardArgs,
+  IQueryFetchBoardsArgs,
   IQueryFetchBoardsCountArgs,
 } from "../../../commons/types/generated/types";
 
@@ -13,7 +13,7 @@ export default function PaginationPage() {
 
   const { data, refetch } = useQuery<
     Pick<IQuery, "fetchBoards">,
-    IQueryFetchBoardArgs
+    IQueryFetchBoardsArgs
   >(FETCH_BOARDS);
   const { data: dataBoardsCount } = useQuery<
     Pick<IQuery, "fetchBoardsCount">,
