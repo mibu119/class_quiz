@@ -65,12 +65,12 @@ export default function KaKaoMapPage() {
 
   return (
     <>
-      <Head>
+      {/* <Head>
         <script
           type="text/javascript"
           src="//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=7ca427efe001faeb59d190980b9b497f"
         ></script>
-      </Head>
+      </Head> */}
       <div id="map" style={{ width: 500, height: 400 }}></div>
     </>
   );

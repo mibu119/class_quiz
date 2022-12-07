@@ -134,6 +134,14 @@ export default function PaginationPage() {
 
   return (
     <div>
+      {data?.fetchBoards.map((el) => (
+        <div key={el._id}>
+          <span style={{ margin: "10px" }}>{el.writer}</span>
+          <span style={{ margin: "10px" }}>{el.title}</span>
+          <span style={{ margin: "10px" }}>{el.contents}</span>
+          <Delete onClick={onClickDelete(el._id)}></Delete>
+        </div>
+      ))}
       <form
         onSubmit={handleSubmit(onClickCreate)}
         style={{
@@ -150,14 +158,6 @@ export default function PaginationPage() {
         내용: <input type="text" {...register("contents")} />
         <button>등록하기</button>
       </form>
-      {data?.fetchBoards.map((el) => (
-        <div key={el._id}>
-          <span style={{ margin: "10px" }}>{el.writer}</span>
-          <span style={{ margin: "10px" }}>{el.title}</span>
-          <span style={{ margin: "10px" }}>{el.contents}</span>
-          <Delete onClick={onClickDelete(el._id)}></Delete>
-        </div>
-      ))}
     </div>
   );
 }
