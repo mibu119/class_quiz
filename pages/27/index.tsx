@@ -1,14 +1,16 @@
-import { gql, useQuery } from "@apollo/client";
+import dynamic from "next/dynamic";
+import "react-quill/dist/quill.snow.css";
+import { useForm } from "react-hook-form";
+import { gql, useMutation } from "@apollo/client";
 import { useRouter } from "next/router";
-import Dompurify from "dompurify";
-import {
-  IQuery,
-  IQueryFetchBoardArgs,
-} from "../../src/commons/types/generated/types";
 
-const FETCH_BOARD = gql`
-  query fetchBoard($boardId: ID!) {
-    fetchBoard(boardId: $boardId) {
+const ReactQuill = dynamic(async () => await import("react-quill"), {
+  ssr: false,
+});
+
+const CREATE_BOARD = gql`
+  mutation createBoard($createBoardInput: CreateBoardInput!) {
+    createBoard(createBoardInput: $createBoardInput) {
       _id
       writer
       title
@@ -17,40 +19,47 @@ const FETCH_BOARD = gql`
   }
 `;
 
-export default function StaticRoutedPage() {
+export default function WebEditorPage() {
   const router = useRouter();
-  console.log(router);
+  const [createBoard] = useMutation(CREATE_BOARD);
 
-  const { data } = useQuery<Pick<IQuery, "fetchBoard">, IQueryFetchBoardArgs>(
-    FETCH_BOARD,
-    {
+  const { register, handleSubmit, setValue, trigger } = useForm({
+    mode: "onChange",
+  });
+
+  const onChangeContents = (value: string) => {
+    console.log(value);
+
+    setValue("contents", value === "<p><br><p>" ? "" : value);
+    void trigger("contents");
+  };
+
+  const onClickSubmit = async (data: any) => {
+    const result = await createBoard({
       variables: {
-        boardId: router.query.id,
+        createBoardInput: {
+          writer: data.writer,
+          password: data.password,
+          title: data.title,
+          contents: data.contents,
+        },
       },
-    }
-  );
+    });
 
-  console.log("=======");
-  console.log(data);
-  console.log("=======");
+    const boardId = result.data?.createBoard._id;
+    if (typeof boardId === "string") void router.push(`/27/${boardId}`);
+  };
 
   return (
-    <div>
-      <div>{router.query.qqq}번 게시글로 이동이 완료되었습니다.</div>
-      <div style={{ color: "red" }}>작성자: {data?.fetchBoard.writer}</div>
-      <div style={{ color: "green" }}>제목: {data?.fetchBoard.title}</div>
-      {/* <div>내용: {data?.fetchBoard.contents}</div> */}
-      {typeof window !== "undefined" ? (
-        <div
-          style={{ color: "blue" }}
-          dangerouslySetInnerHTML={{
-            __html: Dompurify.sanitize(data?.fetchBoard.contents),
-          }}
-        ></div>
-      ) : (
-        <div style={{ color: "blue" }}></div>
-      )}
-      <div style={{ color: "orange" }}>주소: 구로구</div>
-    </div>
+    <form onSubmit={handleSubmit(onClickSubmit)}>
+      작성자: <input type="text" {...register("writer")} />
+      <br />
+      비밀번호: <input type="password" {...register("password")} />
+      <br />
+      제목: <input type="text" {...register("title")} />
+      <br />
+      내용: <ReactQuill onChange={onChangeContents} theme="snow" />
+      <button>등록하기</button>
+    </form>
   );
 }
