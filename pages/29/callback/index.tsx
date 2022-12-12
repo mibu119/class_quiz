@@ -17,7 +17,7 @@ export default function CallbackPage() {
     aa.send();
     aa.addEventListener("load", (res) => {
       //   console.log(res);
-      const num = res.target.response.split("")[0];
+      const num = (res.target as XMLHttpRequest).response.split("")[0];
 
       const bb = new XMLHttpRequest();
       bb.open("get", `https://koreanjson.com/posts/${num}`);
